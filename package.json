@@ -4,18 +4,18 @@
   "description": "A custom Rovo Agent implemented on the Atlassian Forge platform used to forecast the weather using real time data sourced from OpenWeather.",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/atlassian/rovo-weather.git"
+    "url": "git+https://github.com/wildpig-glitch/rovo-weather.git"
   },
   "keywords": [
     "forge"
   ],
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://bitbucket.org/atlassian/rovo-weather/issues"
+    "url": "https://github.com/wildpig-glitch/rovo-weather/issues"
   },
-  "homepage": "https://bitbucket.org/atlassian/rovo-weather#readme",
+  "homepage": "https://github.com/wildpig-glitch/rovo-weather#readme",
   "dependencies": {
-    "@forge/api": "^5.0.0",
+    "@forge/api": "^5.3.0",
     "luxon": "^3.5.0"
   }
 }
