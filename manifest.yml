@@ -5,9 +5,15 @@ modules:
       description: Forecast the weather for a location.
       prompt: |
         --- What you do ---
-        You are a helpful assistant that forecasts the weather for a given location.
+        You are a helpful assistant that forecasts the weather for a given location and provides personalized clothing suggestions.
         You forecast by geocoding a city using the geocode action, and then using the forecast-weather action.
         You can only forecast weather for periods within the next five days.
+        
+        --- Clothing Suggestions ---
+        ALWAYS provide personalized clothing suggestions alongside weather forecasts as an additional column or section.
+        Use the clothing-suggestions action with the current weather conditions, season, and region to generate tailored recommendations.
+        Present clothing suggestions in an organized format covering layers, accessories, footwear, and special considerations.
+        Suggestions should be practical and appropriate for the specific weather conditions and location.
         
         --- Determining the city to forecast for ---
         If the user specifies a landmark, you should infer the city to forecast from that landmark.
@@ -30,13 +36,14 @@ modules:
         You do not need to tell the user the latitude and longitude of the location.
         You may ignore the above formatting suggestions where the user requests the forecast in a different format.
       conversationStarters:
-        - Forecast the weather in Sydney, Australia for the next five days.
-        - What's the weather like at the Eiffel Tower today?
-        - What's the snow like in Tahoe this weekend?
-        - What is a good time for a coffee break during our offsite in Austin, TX tomorrow?
+        - Forecast Sydney weather for 5 days and suggest what to wear.
+        - What's the weather like at the Eiffel Tower today and what should I pack?
+        - What's the snow like in Tahoe this weekend and what clothing should I bring?
+        - What should I wear for our offsite in Austin, TX tomorrow based on the weather?
       actions:
         - geocode
-        - forecast  
+        - forecast
+        - clothing-suggestions  
   action:
     - key: geocode
       function: geocode-fn
@@ -75,11 +82,49 @@ modules:
           type: string
           required: true
           description: "The longitude (in degrees) of the location to forecast weather for"
+    - key: clothing-suggestions
+      function: clothing-fn
+      actionType: external
+      description: |
+        Generate personalized clothing suggestions based on weather conditions, season, and region. Returns recommendations for layers, accessories, footwear, and special considerations.
+      inputs:
+        temperature:
+          title: Temperature
+          type: number
+          required: true
+          description: "The temperature in Celsius for clothing recommendations"
+        description:
+          title: Weather Description
+          type: string
+          required: true
+          description: "Description of the weather conditions (e.g., sunny, rainy, snowy)"
+        rain:
+          title: Rain Data
+          type: string
+          required: false
+          description: "Rain data as JSON string with precipitation amounts"
+        snow:
+          title: Snow Data
+          type: string
+          required: false
+          description: "Snow data as JSON string with precipitation amounts"
+        season:
+          title: Season
+          type: string
+          required: false
+          description: "Current season (spring, summer, autumn/fall, winter)"
+        region:
+          title: Region
+          type: string
+          required: false
+          description: "Geographic region or climate type (e.g., tropical, temperate, arctic)"
   function:
     - key: geocode-fn
       handler: geocode.geocode
     - key: forecast-fn
       handler: forecast.forecast
+    - key: clothing-fn
+      handler: clothing.clothingSuggestions
 
 permissions:
   external:
@@ -92,4 +137,4 @@ permissions:
 app:
   runtime:
     name: nodejs22.x
-  id: ari:cloud:ecosystem::app/d5f9908c-01e7-459a-901c-584d5290470b
+  id: ari:cloud:ecosystem::app/6266a9d4-6dcb-4f89-bae4-6fba77e48962
