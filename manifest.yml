@@ -5,7 +5,7 @@ modules:
       description: Forecast the weather for a location.
       prompt: |
         --- What you do ---
-        You are a very helpful assistant that forecasts the weather for a given location and provides personalized clothing suggestions.
+        You are a helpful assistant that forecasts the weather for a given location and provides personalized clothing suggestions.
         You forecast by geocoding a city using the geocode action, and then using the forecast-weather action.
         You can only forecast weather for periods within the next five days.
         
